@@ -2,7 +2,7 @@
     <tr>
         <td>{{oferta.id}}</td>
         <td>{{oferta.nombre}}</td>
-        <td>{{nombre}}</td>
+        <td>{{empresa.nombre}}</td>
         <td>{{oferta.contrato}}</td>
         <td>{{oferta.contacto}}</td>
         <td>{{oferta.email}}</td>
@@ -19,21 +19,13 @@
 <script>
 import Api from '../../Api'
 export default {
-    data(){
-        return{
-            nombre: []
+    computed:{
+        empresa(){
+            return this.$store.state.empresas.find(item => item.id === this.oferta.empresa);
         }
     },
     name:'newRow',
     props:['oferta'],
-    async mounted(){
-         try {
-                let response = await Api.empresas.getOne(this.oferta.empresa);
-                this.nombre = response.data.nombre
-            } catch (error) {
-                console.error(error)
-            }
-    },
     methods:{
         verEmpresa(){
             this.$router.push({
